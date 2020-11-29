@@ -1,8 +1,169 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Montserrat', sans-serif;
+  background-color: #F7F7F7;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+
+/* HEADER */
+
+header {
+  padding: 10px;
+  background-color: #5BC0DE;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logo {
+  width: 150px;
+}
+
+.btn-login {
+  background-color: white;
+  border-radius: 100px;
+  color: #5BC0DE;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.btn-login:hover {
+  background-color: #5BC0DE;
+  color: white;
+  border: 2px solid white;
+}
+
+/* MAIN */
+
+.event-box {
+  height: 500px;
+  background-image: url("/images/tennis_court.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.event-box h1 {
+  color: white;
+  font-size: 60px;
+}
+
+.search-box {
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #FFFFFF;
+  opacity: 80%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.form-search-event select, input[type=date] {
+  padding: 20px 25px;
+  width: 200px;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-find-event {
+  background-color: #5BC0DE;
+  padding: 20px 25px;
+  border: none;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.box-more-sport {
+  margin-top: 90px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sports-info {
+  display: flex;
+}
+
+.sports-info section {
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sports-info section h2 {
+  color: #3B3D40;
+  font-size: 55px;
+}
+
+.sports-info section p {
+  color: #707070;
+  font-size: 20px;
+}
+
+.box-info-app {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  margin-bottom: 100px;
+}
+
+.box-item {
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.box-item i {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.box-item i, h2 {
+  color: #3B3D40;
+}
+
+.box-item p {
+  color: #707070;
+}
+
+/* FOOTER */
+
+footer {
+  display: flex;
+  padding: 20px;
+  background-color: #5BC0DE;
+  justify-content: center;
+}
+
+footer section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer section p {
+  color: white;
+}
+
+footer section img {
+  width: 300px;
 }

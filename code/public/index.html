@@ -1,13 +1,100 @@
 <html>
 
 <head>
-  <title>Express</title>
+  <title>SportsPlus</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="icon" href="./images/favicon.png" type="image/png">
+  
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet"> 
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <script src="/javascripts/index.js"></script>
+
 </head>
 
 <body>
-  <h1>SportPlus</h1>
-  <p>The best app for sport!</p>
+  <header>
+    <a href="#"><img id="logo" src="images/logo.png"></a>
+    <section class="header-right">
+      <a href="#" class="btn-login">LOGIN</a>
+    </section>
+  </header>
+  <main>
+    <section class="event-box">
+      <h1>FIND EVENTS NEAR YOU</h1>
+      <div class="search-box">
+        <form class="form-search-event">
+          <select id="sport" name="sport">
+            <option selected>All Sports</option>
+          </select>
+          <select id="club" name="club">
+            <option selected>No Club</option>
+          </select>
+          <input type="date"/>
+          <input type="button" class="btn-find-event" value="FIND EVENT"/>
+        </form>
+      </div>
+    </section>
+
+    <section class="box-more-sport">
+      <section class="sports-info">
+        <img id="logo" src="images/logo2.png"/>
+        <section>
+          <h2>DO MORE SPORT.</h2>
+          <p>SportsPlus mission is to help you do more sport,<br> for any sport you like.</p>
+        </section>
+      </section>
+    </section>
+
+    <section class="box-info-app">
+      <section class="box-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <section>
+          <h2>FIND A EVENT OR CREATE A NEW ONE</h2>
+          <p>
+            If you cannot find any event of the modality you are looking for, near you, you can always create a new one.
+          </p>
+        </section>
+      </section>
+      <section class="box-item" style="margin-left: 15px;">
+        <i class="far fa-calendar-alt"></i>
+        <section>
+          <h2>FILTER EVENTS</h2>
+          <p>
+            You can filter the events that will appear on the map, according to the modality or data.
+          </p>
+        </section>
+      </section>
+      <section class="box-item" style="margin-left: 15px;">
+        <i class="fas fa-user-friends"></i>
+        <section>
+          <h2>INVITE FRIENDS TO YOUR EVENT</h2>
+          <p>
+            It's a great opportunity to meet new people and have fun with your friends.
+          </p>
+        </section>
+      </section>
+      <section class="box-item" style="margin-left: 15px;">
+        <i class="fas fa-football-ball"></i>
+        <section>
+          <h2>PLAY</h2>
+          <p>
+            On the planeed date, you have to go to the event location to participate.
+          </p>
+        </section>
+      </section>
+    </section>
+
+  </main>
+  <footer>
+    <section>
+      <img src="images/logo.png"/>
+      <p>&copy;  2020 SportPlus. All rights reserved.</p>
+    </section>
+  </footer>
 </body>
 
 </html>
