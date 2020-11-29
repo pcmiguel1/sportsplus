@@ -33,6 +33,7 @@ header {
   color: #5BC0DE;
   padding: 10px 15px;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 .btn-login:hover {
@@ -63,8 +64,7 @@ header {
 .search-box {
   margin-top: 10px;
   display: inline-block;
-  background-color: #FFFFFF;
-  opacity: 80%;
+  background-color: rgba(255, 255, 255, 0.4);
   padding: 10px;
   border-radius: 10px;
 }
@@ -85,6 +85,11 @@ header {
   font-weight: bold;
   cursor: pointer;
   font-size: 17px;
+  transition: 0.3s;
+}
+
+.btn-find-event:hover {
+  opacity: 0.6;
 }
 
 .box-more-sport {
