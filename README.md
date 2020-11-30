@@ -1,6 +1,6 @@
 ## :tennis: SportsPlus
 
-![SportsPlus](https://i.imgur.com/SBXqrsz.png)
+![SportsPlus](https://i.imgur.com/u3DSUbU.png)
 
 [https://sportsplus-app.herokuapp.com/](https://sportsplus-app.herokuapp.com/)
 
