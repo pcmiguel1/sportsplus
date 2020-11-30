@@ -1,0 +1,93 @@
+.login-box{
+    height: 500px;
+    background-image: url("/images/tennis_court.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login-box h2 {
+    color: white;
+    font-size: 60px;
+  }
+
+.selection-box{
+    margin-top: 20px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btn-return-account{
+    background-color: #5BC0DE;
+    padding: 20px 25px;
+    border: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.btn-new-account{
+    background-color: #5BC0DE;
+    padding: 20px 25px;
+    border: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.btn-login-enter{
+    width: 100%;
+    margin-top: 10px;
+    background-color: #5BC0DE;
+    padding: 20px 25px;
+    border: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.input-username{
+    width: 100%;
+    padding: 10px;
+}
+
+.new-account-box{
+    margin-top: 10px;
+}
+
+.return-account.box{
+    margin-top: 10px; 
+}
+
+.input-account-details{
+    width: 70%;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login-box label{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.section-input{
+    display: flex;
+    align-items: center;
+}
