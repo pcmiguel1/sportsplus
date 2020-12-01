@@ -12,38 +12,48 @@
   <!-- icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-  <script src="/javascripts/index.js"></script>
+  <script src="/javascripts/login.js"></script>
 
 </head>
 
 <body>
   <header>
-    <a href="#"><img id="logo" src="images/logo.png"></a>
-    <section class="header-right">
-      <a href="#" class="btn-login">LOGIN</a>
-    </section>
+    <a href="index.html"><img id="logo" src="images/logo.png"></a>
   </header>
   <main>
-    <section class="login-box">
-        <h2>CHOOSE AN OPTION</h2>
-        <div class="selection-box">
-            <input type="button" class="btn-return-account" value="RETURN TO YOUR ACCOUNT"/>
-            <input type="button" class="btn-new-account" value="NEW ACCOUNT"/>
-            <section class="new-account-box">
-                <section class="section-input">
-                    <label>Nome Completo:</label>
-                <input type="text" class="input-account-details"/>
-                </section>
-                <section class="section-input">
-                    <label>Username:</label>
-                    <input type="text" class="input-account-details"/>
-                </section>
+    <section class="box">
+        <section class="login-box">
+            <section class="selector-login">
+              <button id="selectorRegister" class="btn-login-selector" onclick="selectorRegister();">REGISTER</button>
+              <button id="selectorLogin" class="btn-login-selector selector-active" onclick="selectorLogin();">LOGIN</button>
+
+              <section id="sectionLogin" class="section-login">
+                <label for="username">Username</label>
+                <input type="text" id="username" required/>
+
+                <input type="button" class="submit-btn" value="LOGIN"/>
+              </section>
+
+              <section id="sectionRegister" class="section-register section-disable">
+                <label for="username">Username</label>
+                <input type="text" id="username" required/>
+
+                <label for="username">Email</label>
+                <input type="text" id="username" required/>
+
+                <label for="username">Date of birth</label>
+                <input type="date" id="username" required/>
+
+                <label for="username">Genre</label>
+                <select id="club" name="club" required>
+                  <option selected>Male</option>
+                  <option selected>Female</option>
+                </select>
+
+                <input type="button" class="submit-btn" value="REGISTER"/>
+              </section>
             </section>
-            <section class="return-account-box">
-                <input type="text" class="input-username"/>
-                <input type="button" class="btn-login-enter" value="ENTER"/>
-            </section>
-        </div>
+        </section>
     </section>
   </main>
   
