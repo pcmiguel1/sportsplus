@@ -1,3 +1,8 @@
+
+body {
+    overflow: hidden;
+}
+
 #mapa {
-    height: 770px;
+    height: 100%;
 }
