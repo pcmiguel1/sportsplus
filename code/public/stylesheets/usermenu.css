@@ -1,4 +1,91 @@
-.menu-box {
-    height: 500px;
+.main{
+    height: 770px;
     background-color: #5BC0DE;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .main-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .nextevent-box{
+    background-color: rgb(105, 14, 224);
+    border-radius: 10px;
+    width: 100%;
+    padding: 60px 0px 100px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .nextevent-box h1{
+    color: white;
+    font-size: 60px;
+  }
+
+  .nextevent-box h3{
+    color: gray;
+    font-size: 15px;
+    margin-top: 20px;
+  }
+
+  .line1{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .right-box{
+    background-color:white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 0px 40px 0px;
+    margin-left: 5px;
+  }
+
+  .left-box{
+    background-color:white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 0px 40px 0px;
+    margin-right: 5px;
+  }
+
+  .right-box h1{
+    color: black;
+    font-size: 35px;
+    padding-bottom: 10px;
+  }
+
+  .right-box h3{
+    color: grey;
+    font-size: 15px;
+  }
+
+  .left-box h1{
+    color: black;
+    font-size: 35px;
+    padding-bottom: 10px;
+  }
+
+  .left-box h3{
+    color: grey;
+    font-size: 15px;
+  }
+
+  .line2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 15px;
   }
