@@ -20,5 +20,24 @@ window.onload = async function() {
     } catch(err) {
         console.log(err);
     }
+    try {
+
+        let clubs = await $.ajax({
+            url: "/api/clubs",
+            method: "get",
+            dataType: "json"
+        });
+
+        let aux = "";
+        aux += "<option selected value='0'>All Clubs</option>";
+        for (let club of clubs) {
+            aux += "<option value='"+ club.id +"'>" + club.name + "</option>";
+        }
+        document.getElementById("club").innerHTML = aux;
+
+    } catch(err) {
+        console.log(err);
+    }
 
 }
+
