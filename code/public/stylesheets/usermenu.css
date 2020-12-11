@@ -35,8 +35,7 @@
   }
 
   .line1{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     width: 100%;
     margin-top: 15px;
   }
@@ -49,6 +48,7 @@
     flex-direction: column;
     padding: 40px 0px 40px 0px;
     margin-left: 5px;
+    width: 100%;
   }
 
   .left-box{
@@ -59,6 +59,7 @@
     flex-direction: column;
     padding: 40px 0px 40px 0px;
     margin-right: 5px;
+    width: 100%;
   }
 
   .right-box h1{
@@ -84,8 +85,7 @@
   }
 
   .line2{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     width: 100%;
     margin-top: 15px;
   }
