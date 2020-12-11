@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var sportsModel = require('../models/sportsModel');
+var sportsModel = require('../Models/sportsModel');
 
 router.get('/', async function(req, res, next) {
     let result = await sportsModel.getAllSports();
