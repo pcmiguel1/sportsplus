@@ -44,6 +44,12 @@ header {
 
 /* MAIN */
 
+#error {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
 .event-box {
   height: 500px;
   background-image: url("/images/tennis_court.jpg");
