@@ -20,6 +20,9 @@ window.onload = async function() {
     } catch(err) {
         console.log(err);
     }
+
+    //Carregar clubs
+
     try {
 
         let clubs = await $.ajax({
@@ -42,8 +45,8 @@ window.onload = async function() {
 }
 
 async function findEvent(){
-    let sportsID=document.getElementById("sport").value;
-    let clubsID=document.getElementById("club").value;
+    let sportID=document.getElementById("sport").value;
+    let clubID=document.getElementById("club").value;
     let date=document.getElementById("date").value;
     let filterEvents=[];
 
@@ -56,33 +59,41 @@ async function findEvent(){
         });
 
         for(let event of events){
-            if(sportsID=="all" && clubsID=="all" && date==""){
+            if(sportID=="all" && clubID=="all" && date==""){
                 filterEvents.push(event);
             }
-            else if(sportsID=="all" && event.event_club_id==clubsID && date==""){
+            else if(sportID=="all" && event.event_club_id==clubID && date==""){
                 filterEvents.push(event);
             }
-            else if(sportsID=="all" && clubsID=="all" && event.event_date==date){
+            else if(sportID=="all" && clubID=="all" && event.event_date.substring(0,10)==date){
                 filterEvents.push(event);
             }
-            else if(sportsID=="all" && event.event_club_id==clubsID && event.event_date==date){
+            else if(sportID=="all" && event.event_club_id==clubID && event.event_date.substring(0,10)==date){
                 filterEvents.push(event);
             }
-            else if(event.event_sport_id==sportsID && clubsID=="all" && date==""){
+            else if(event.event_sport_id==sportID && clubID=="all" && date==""){
                 filterEvents.push(event);
             }
-            else if(event.event_sport_id==sportsID && event.event_club_id==clubsID && event.event_date==date){
+            else if(event.event_sport_id==sportID && event.event_club_id==clubID && event.event_date.substring(0,10)==date){
                 filterEvents.push(event);
             }
-            else if(event.event_sport_id==sportsID && event.event_club_id==clubsID && date==""){
+            else if(event.event_sport_id==sportID && event.event_club_id==clubID && date==""){
                 filterEvents.push(event);
             }
-            else if(event.event_sport_id==sportsID && clubsID=="all" && event.event_date==date){
+            else if(event.event_sport_id==sportID && clubID=="all" && event.event_date.substring(0,10)==date){
                 filterEvents.push(event);
             }
         }
-        console.log(filterEvents);
-        console.log(date);
+        if (filterEvents.length > 0) { //Se tiver algum evento na lista
+            let events_json = JSON.stringify(filterEvents); //converting list to json
+            sessionStorage.setItem("events", events_json); //saving events on Web Storage
+            window.location = "mapa.html"; //changing to the mapa page
+        }
+        else { //se o tamanho for 0, então vai mostrar um erro
+            document.getElementById("error").innerHTML = "No Events found!";
+        }
+
+
     } catch(err) {
         console.log(err);
     }
