@@ -13,13 +13,30 @@ async function setupMap() {
 
     for (let event of events) {
 
-        var markerIcon = L.icon({
-            iconUrl: './images/logo2.png',
-        
-            iconSize:     [60, 75], // size of the icon
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
+        try {
+
+            let sports = await $.ajax({
+                url: "/api/sports",
+                method: "get",
+                dataType: "json"
+            });
+    
+            for (let sport of sports) {
+                if (event.event_sport_id == sport.id) {
+
+                    var markerIcon = L.icon({
+                        iconUrl: sport.image,
+                    
+                        iconSize:     [73, 80], // size of the icon
+                        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+
+                }
+            }
+    
+        } catch(err) {
+            console.log(err);
+        }
 
         let location = "";
 
