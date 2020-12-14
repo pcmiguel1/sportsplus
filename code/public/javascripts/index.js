@@ -48,44 +48,17 @@ async function findEvent(){
     let sportID=document.getElementById("sport").value;
     let clubID=document.getElementById("club").value;
     let date=document.getElementById("date").value;
-    let filterEvents=[];
 
     try {
 
         let events = await $.ajax({
-            url: "/api/events",
+            url: "/api/events?sportId="+sportID+"&clubId="+clubID+"&date="+date,
             method: "get",
             dataType: "json"
         });
 
-        for(let event of events){
-            if(sportID=="all" && clubID=="all" && date==""){
-                filterEvents.push(event);
-            }
-            else if(sportID=="all" && event.event_club_id==clubID && date==""){
-                filterEvents.push(event);
-            }
-            else if(sportID=="all" && clubID=="all" && event.event_date.substring(0,10)==date){
-                filterEvents.push(event);
-            }
-            else if(sportID=="all" && event.event_club_id==clubID && event.event_date.substring(0,10)==date){
-                filterEvents.push(event);
-            }
-            else if(event.event_sport_id==sportID && clubID=="all" && date==""){
-                filterEvents.push(event);
-            }
-            else if(event.event_sport_id==sportID && event.event_club_id==clubID && event.event_date.substring(0,10)==date){
-                filterEvents.push(event);
-            }
-            else if(event.event_sport_id==sportID && event.event_club_id==clubID && date==""){
-                filterEvents.push(event);
-            }
-            else if(event.event_sport_id==sportID && clubID=="all" && event.event_date.substring(0,10)==date){
-                filterEvents.push(event);
-            }
-        }
-        if (filterEvents.length > 0) { //Se tiver algum evento na lista
-            let events_json = JSON.stringify(filterEvents); //converting list to json
+        if (events.length > 0) { //Se tiver algum evento na lista
+            let events_json = JSON.stringify(events); //converting list to json
             sessionStorage.setItem("events", events_json); //saving events on Web Storage
             window.location = "mapa.html"; //changing to the mapa page
         }

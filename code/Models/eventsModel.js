@@ -1,10 +1,28 @@
 
 var pool = require("./connection");
 
-module.exports.getAllEvents = async function() { 
+module.exports.getAllEvents = async function(filterObj) { 
     try {
-        const sql = "SELECT * FROM events";
-        const events = await pool.query(sql);
+
+        let filterQueries = "";
+        let filterValues = [];
+
+        if (filterObj.sportId && filterObj.sportId != "all") {
+            filterQueries += " AND event_sport_id = ?";
+            filterValues.push(filterObj.sportId);
+        }
+
+        if (filterObj.clubId && filterObj.clubId != "all") {
+            filterQueries += " AND event_club_id = ?";
+            filterValues.push(filterObj.clubId);
+        }
+
+        if (filterObj.date) {
+            filterQueries += " AND event_date = ?";
+            filterValues.push(filterObj.date.substring(0,10)); //substring para mostrar so a parte da data e nao a hora
+        }
+        sql = "SELECT * FROM events E LEFT OUTER JOIN sports S ON E.event_sport_id = S.sport_id LEFT OUTER JOIN clubs C ON E.event_club_id = C.club_id WHERE E.event_sport_id = S.sport_id" + filterQueries;
+        let events = await pool.query(sql, filterValues);
         return {status: 200, data: events};
     } catch (err) {
         console.log(err);

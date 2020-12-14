@@ -3,7 +3,8 @@ var router = express.Router();
 var eventsModel = require('../Models/eventsModel');
 
 router.get('/', async function(req, res, next) {
-    let result = await eventsModel.getAllEvents();
+    let filterObj = req.query;
+    let result = await eventsModel.getAllEvents(filterObj);
     res.status(result.status).send(result.data);
 });
 

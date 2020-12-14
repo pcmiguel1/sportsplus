@@ -13,54 +13,18 @@ async function setupMap() {
 
     for (let event of events) {
 
-        try {
-
-            let sports = await $.ajax({
-                url: "/api/sports",
-                method: "get",
-                dataType: "json"
-            });
-    
-            for (let sport of sports) {
-                if (event.event_sport_id == sport.id) {
-
-                    var markerIcon = L.icon({
-                        iconUrl: sport.image,
-                    
-                        iconSize:     [73, 80], // size of the icon
-                        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                    });
-
-                }
-            }
-    
-        } catch(err) {
-            console.log(err);
-        }
+        var markerIcon = L.icon({
+            iconUrl: event.sport_image,
+        
+            iconSize:     [73, 80], // size of the icon
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
 
         let location = "";
 
         //Se o evento nao tiver local definido então vai buscar o local ao club respetivo
         if (event.event_local == "") {
-            let club_id = event.event_club_id;
-
-            try {
-
-                let clubs = await $.ajax({
-                    url: "/api/clubs",
-                    method: "get",
-                    dataType: "json"
-                });
-        
-                for (let club of clubs) {
-                    if (club.id == club_id) {
-                        location = club.local;
-                    }
-                }
-        
-            } catch(err) {
-                console.log(err);
-            }
+            location = event.club_local;
 
         }
         else {
