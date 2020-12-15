@@ -39,22 +39,27 @@
               </section>
 
               <section id="sectionRegister" class="section-register section-disable">
-                <label for="username">Username</label>
-                <input type="text" id="username" required/>
 
-                <label for="username">Email</label>
-                <input type="text" id="username" required/>
+                <label for="name">Name</label>
+                <input type="text" id="name" required/>
 
-                <label for="username">Date of birth</label>
-                <input type="date" id="username" required/>
+                <label for="username2">Username</label>
+                <input type="text" id="username2" required/>
 
-                <label for="username">Genre</label>
-                <select id="club" name="club" required>
-                  <option selected>Male</option>
-                  <option selected>Female</option>
+                <label for="email">Email</label>
+                <input type="text" id="email" required/>
+
+                <label for="date">Date of birth</label>
+                <input type="date" id="date" required/>
+
+                <label for="genre">Genre</label>
+                <select id="genre" required>
+                  <option selected value="M">Male</option>
+                  <option value="F">Female</option>
                 </select>
 
-                <input type="button" class="submit-btn" value="REGISTER"/>
+                <input type="button" class="submit-btn" value="REGISTER" onclick="buttonRegister();"/>
+                <p id="result"></p>
               </section>
             </section>
         </section>

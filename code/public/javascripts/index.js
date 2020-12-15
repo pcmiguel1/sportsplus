@@ -1,9 +1,10 @@
+//Vai buscar a informacao sobre o utilizador logado
 let user_json = sessionStorage.getItem("user");
 var user = JSON.parse(user_json);
-console.log(user);
 
 window.onload = async function() {
 
+    //Se foi feito o login quer dizer que existe utilizador, por isso vai fazer desaparecer o botao de login e vai fazer aparecer o nome de utilizador
     if(user){
         document.getElementById("loginButton").style.display="none";
         document.getElementById("boxUser").style.display="flex";

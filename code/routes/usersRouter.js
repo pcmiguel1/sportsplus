@@ -13,5 +13,11 @@ router.get('/:pos', async function(req, res, next) {
     res.status(result.status).send(result.data);
 });
 
+router.post('/', async function(req, res, next) {
+    let user = req.body;
+    let result = await usersModel.createUser(user);
+    res.status(result.status).send(result.data);
+});
+
 module.exports = router;
 
