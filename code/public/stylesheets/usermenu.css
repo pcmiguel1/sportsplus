@@ -2,8 +2,7 @@
     height: 770px;
     background-color: #5BC0DE;
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    grid-template-columns: auto;
   }
 
   .main-box{
@@ -11,6 +10,23 @@
     align-items: center;
     flex-direction: column;
     width: 50%;
+  }
+
+  .mainbox-left{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    font-size: 60px;
+    color: white;
+  }
+
+  .mainbox-right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
   }
 
   .nextevent-box{
@@ -117,4 +133,8 @@
   .logoutBox h3{
     color: black;
     font-size: 15px;
+  }
+
+  .image1{
+  width: 400px;
   }
