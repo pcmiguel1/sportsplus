@@ -6,6 +6,7 @@ var logger = require('morgan');
 var sportsRouter = require('./routes/sportsRouter');
 var clubsRouter = require('./routes/clubsRouter');
 var eventsRouter = require('./routes/eventsRouter');
+var usersRouter = require('./routes/usersRouter');
 
 var app = express();
 
@@ -18,5 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/sports', sportsRouter);
 app.use('/api/clubs', clubsRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/users', usersRouter);
 
 module.exports = app;

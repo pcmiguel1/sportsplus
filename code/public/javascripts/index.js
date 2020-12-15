@@ -1,4 +1,14 @@
+let user_json = sessionStorage.getItem("user");
+var user = JSON.parse(user_json);
+console.log(user);
+
 window.onload = async function() {
+
+    if(user){
+        document.getElementById("loginButton").style.display="none";
+        document.getElementById("boxUser").style.display="flex";
+        document.getElementById("username").innerHTML=user.user_nickname;
+    }
 
     //Carregar sports
 

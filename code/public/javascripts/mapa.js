@@ -1,4 +1,3 @@
-
 let events_json = sessionStorage.getItem("events");
 var events = JSON.parse(events_json);
 
