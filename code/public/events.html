@@ -1,0 +1,82 @@
+<html>
+
+<head>
+  <title>SportsPlus</title>
+  <link rel="stylesheet" href="/stylesheets/events-style.css">
+  <link rel="icon" href="./images/favicon.png" type="image/png">
+  
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet"> 
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="/javascripts/events.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <a href="index.html"><img id="logo" src="images/logo.png"></a>
+    <section class="header-right">
+      <section class="dropdown">
+        <section id="boxUser" class="boxUser">
+          <p id="username"></p>
+          <i class="fas fa-user"></i>
+        </section>
+        <div class="dropdown-content">
+          <a href="#"><i class="far fa-calendar-alt"></i> Events</a>
+          <a href="#"><i class="fas fa-user-cog"></i> Profile</a>
+          <a href="#" onclick="logout();"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </section>
+    </section>
+  </header>
+  <nav>
+    <section class="nav-links">
+        <a href="#" class="active-link"><i class="far fa-calendar-alt"></i> My Events</a>
+        <a href="#"><i class="far fa-calendar-check"></i> Events to Attend</a>
+        <a href="#"><i class="fas fa-trophy"></i> Events Participated</a>
+    </section>
+    <section class="nav-button">
+        <a href="#" class="btn-create-event"><i class="fas fa-plus"></i> EVENT</a>
+    </section>
+  </nav>
+  <main>
+    <table id="table-my-events">
+        <tr>
+            <th>NAME</th>
+            <th>SPORT</th>
+            <th>DATE</th>
+            <th>STATUS</th>
+            <th>PRIVACY</th>
+            <th>PLAYERS</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>Basket With Friends</td>
+            <td><i class="fas fa-basketball-ball"></i></td>
+            <td>06/01/21 15:00</td>
+            <td><span class="box-status">looking for players</span></td>
+            <td><i class="fas fa-unlock"></i></td>
+            <td>2/4</td>
+            <td>
+                <a class="btn-edit"><i class="fas fa-pen"></i></a>
+                <a class="btn-delete"><i class="fas fa-trash"></i></a>
+            </td>
+          </tr> 
+    </table>
+  </main>
+
+  <footer>
+    <section>
+      <img src="images/logo.png"/>
+      <p>&copy;  2020 SportPlus. All rights reserved.</p>
+    </section>
+  </footer>
+</body>
+
+</html>
