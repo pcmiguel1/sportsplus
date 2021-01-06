@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <title>SportsPlus</title>
+  <link rel="stylesheet" href="/stylesheets/myevents-style.css">
+  <link rel="icon" href="./images/favicon.png" type="image/png">
+  
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet"> 
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="/javascripts/myevents.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <a href="index.html"><img id="logo" src="images/logo.png"></a>
+    <section class="header-right">
+      <section class="dropdown">
+        <section id="boxUser" class="boxUser">
+          <p id="username"></p>
+          <i class="fas fa-user"></i>
+        </section>
+        <div class="dropdown-content">
+          <a href="#"><i class="far fa-calendar-alt"></i> Events</a>
+          <a href="#"><i class="fas fa-user-cog"></i> Profile</a>
+          <a href="#" onclick="logout();"><i class="fas fa-sign-out-alt"></i> Log out</a>
+        </div>
+      </section>
+    </section>
+  </header>
+  <nav>
+    <section class="nav-links">
+        <a href="#"><i class="far fa-calendar-alt"></i> My Events</a>
+        <a href="#"><i class="far fa-calendar-check"></i> Events to Attend</a>
+        <a href="#"><i class="fas fa-trophy"></i> Events Participated</a>
+    </section>
+    <section class="nav-button">
+        <a href="#" class="btn-create-event"><i class="fas fa-plus"></i> EVENT</a>
+    </section>
+  </nav>
+  <main>
+    <input type="text" id="event_name"/>
+    <input type="text" id="event_desc"/>
+    <select id="sport"></select>
+    <select id="club"></select>
+    <input type="date" id="event_date"/>
+    <select id="event_privacy"></select>
+    <input type="number" step="1" min="1" id="event_min"/>
+    <input type="number" step="1" min="2" id="event_max"/>
+    <input type="number" step="1" id="event_duration"/>
+  </main>
+
+  <footer>
+    <section>
+      <img src="images/logo.png"/>
+      <p>&copy;  2020 SportPlus. All rights reserved.</p>
+    </section>
+  </footer>
+</body>
+
+</html>
