@@ -40,3 +40,15 @@ module.exports.getEvent = async function(event_id) {
         return {status: 500, data: err};
     } 
 };
+
+module.exports.createEvent = async function(event) {
+    try {
+
+        let sql = "INSERT INTO events() " + "VALUES (?,?,?,?,?)";
+        let result = await pool.query(sql, [ user.user_name, user.user_nickname, user.user_gender, user.user_birthday, user.user_email ]);
+        return {status: 200, data: result};
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};

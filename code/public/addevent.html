@@ -60,18 +60,18 @@
   </nav>
   <main>
     <section class="section-inputs">
-      <input type="text" id="event_name" placeholder="Event name"/>
+      <input type="text" id="event_name" placeholder="Event name" required/>
       <textarea rows="4" cols="50" id="event_desc" placeholder="Event description"></textarea>
       <select id="sport"></select>
       <select id="club" onchange="addMarkerMap();"></select>
-      <input type="date" id="event_date"/>
+      <input type="date" id="event_date" required/>
       <select id="event_privacy">
         <option value="public">Public</option>
         <option value="private">Private</option>
       </select>
-      <input type="number" step="1" min="1" id="event_min" placeholder="Min" value="1"/>
-      <input type="number" step="1" min="2" id="event_max" placeholder="Max" value="2"/>
-      <input type="number" step="1" id="event_duration" placeholder="Event Duration"/>
+      <input type="number" step="1" min="1" id="event_min" placeholder="Min" value="1" required/>
+      <input type="number" step="1" min="2" id="event_max" placeholder="Max" value="2" required/>
+      <input type="number" step="1" id="event_duration" placeholder="Event Duration" required/>
       <button class="btn-add-event" onclick="createEventSubmit();">CREATE</button>
     </section>
     <section class="section-map">

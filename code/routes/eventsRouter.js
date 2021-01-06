@@ -14,5 +14,11 @@ router.get('/:pos', async function(req, res, next) {
     res.status(result.status).send(result.data);
 });
 
+router.post('/', async function(req, res, next) {
+    let event = req.body;
+    let result = await eventsModel.createEvent(event);
+    res.status(result.status).send(result.data);
+});
+
 module.exports = router;
 

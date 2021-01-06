@@ -125,11 +125,10 @@ async function addMarkerMap() {
 
 function createEventSubmit() {
 
-    /*let correct = true;
+    let correct = true;
 
     if (!verifyEmptyInputs()) correct = false;
-
-
+    if (!verifyLocation()) correct = false;
     if (!correct) return;
 
 
@@ -141,11 +140,70 @@ function createEventSubmit() {
     let event_privacy = document.getElementById("event_privacy").value;
     let event_min = document.getElementById("event_min").value;
     let event_max = document.getElementById("event_max").value;
-    let event_duration = document.getElementById("event_duration").value;*/
+    let event_duration = document.getElementById("event_duration").value;
 
     let box = document.getElementById("box-info");
-    box.style.display = "block";
-    box.style.backgroundColor = "greenyellow";
-    box.innerHTML = "fjjfj";
 
+    let data = {
+        user_name: name,
+        user_nickname: nickname,
+        user_gender: gender,
+        user_birthday: birthday,
+        user_email: email
+    }
+
+    try {
+
+        let result = await $.ajax({
+            url: "/api/events",
+            method: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json"
+        });
+        box.style.display = "block";
+        box.style.backgroundColor = "#a8e063";
+        box.innerHTML = "Successfully created event <i class='fas fa-check'></i>";
+        
+    } catch(err) {
+        console.log(err);
+        if (err.responseJSON) {
+            box.style.display = "block";
+            box.style.backgroundColor = "#ED213A";
+            box.innerHTML = err.responseJSON.msg + " <i class='fas fa-exclamation-triangle'></i>";
+        } else {
+            box.style.display = "block";
+            box.style.backgroundColor = "#ED213A";
+            box.innerHTML = "It was not possible to create the event <i class='fas fa-exclamation-triangle'></i>";
+        }
+    }
+
+}
+
+function verifyEmptyInputs() {
+    let event_name = document.getElementById("event_name").value;
+    let event_date = document.getElementById("event_date").value;
+    let event_min = document.getElementById("event_min").value;
+    let event_max = document.getElementById("event_max").value;
+    let event_duration = document.getElementById("event_duration").value;
+
+    let box = document.getElementById("box-info");
+    if (event_name == "" || event_date == "" || event_min == "" || event_max == "" || event_duration == "") {
+        box.style.display = "block";
+        box.style.backgroundColor = "#ED213A";
+        box.innerHTML = "Fill in all the spaces above <i class='fas fa-exclamation-triangle'></i>";
+        return false;
+    }
+    return true;
+}
+
+function verifyLocation() {
+    let box = document.getElementById("box-info");
+    if (!event_location) {
+        box.style.display = "block";
+        box.style.backgroundColor = "#ED213A";
+        box.innerHTML = "Select the event location on the map <i class='fas fa-exclamation-triangle'></i>";
+        return false;
+    }
+    return true;
 }
