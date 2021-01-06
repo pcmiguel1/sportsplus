@@ -13,6 +13,12 @@ router.get('/:pos', async function(req, res, next) {
     res.status(result.status).send(result.data);
 });
 
+router.get('/:pos/events', async function(req, res, next) {
+    let pos = req.params.pos;
+    let result = await usersModel.getUserEvents(pos);
+    res.status(result.status).send(result.data);
+});
+
 router.post('/', async function(req, res, next) {
     let user = req.body;
     let result = await usersModel.createUser(user);

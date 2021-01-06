@@ -34,3 +34,14 @@ module.exports.createUser = async function(user) {
         return {status: 500, data: err};
     } 
 };
+
+module.exports.getUserEvents = async function(user_id) {
+    try {
+        let sql = "SELECT * FROM events E, sports S WHERE event_creator_id = ? and E.event_sport_id = S.sport_id";
+        let result = await pool.query(sql, [ user_id ]);
+        return {status: 200, data: result };
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};

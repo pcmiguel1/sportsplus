@@ -166,6 +166,7 @@ main {
 
 #table-my-events tr td {
   color: #707070;
+  padding-top: 35px;
 }
 
 .box-status {
@@ -173,6 +174,12 @@ main {
   background-color: #FFBF40;
   color: white;
   border-radius: 5px;
+}
+
+#error {
+  display: none;
+  justify-content: center;
+  align-items: center;
 }
 
 /* FOOTER */
