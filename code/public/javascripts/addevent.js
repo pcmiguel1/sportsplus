@@ -144,7 +144,7 @@ function createEventSubmit() {
 
     let box = document.getElementById("box-info");
 
-    let data = {
+    /*let data = {
         user_name: name,
         user_nickname: nickname,
         user_gender: gender,
@@ -176,7 +176,7 @@ function createEventSubmit() {
             box.style.backgroundColor = "#ED213A";
             box.innerHTML = "It was not possible to create the event <i class='fas fa-exclamation-triangle'></i>";
         }
-    }
+    }*/
 
 }
 
