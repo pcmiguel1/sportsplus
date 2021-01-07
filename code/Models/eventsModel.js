@@ -18,7 +18,7 @@ module.exports.getAllEvents = async function(filterObj) {
         }
 
         if (filterObj.date) {
-            filterQueries += " AND event_date = ?";
+            filterQueries += " AND DATE(event_date) = ?";
             filterValues.push(filterObj.date.substring(0,10)); //substring para mostrar so a parte da data e nao a hora
         }
         sql = "SELECT * FROM events E LEFT OUTER JOIN sports S ON E.event_sport_id = S.sport_id LEFT OUTER JOIN clubs C ON E.event_club_id = C.club_id WHERE E.event_sport_id = S.sport_id" + filterQueries;
@@ -44,8 +44,8 @@ module.exports.getEvent = async function(event_id) {
 module.exports.createEvent = async function(event) {
     try {
 
-        let sql = "INSERT INTO events() " + "VALUES (?,?,?,?,?)";
-        let result = await pool.query(sql, [ user.user_name, user.user_nickname, user.user_gender, user.user_birthday, user.user_email ]);
+        let sql = "INSERT INTO events(event_name, event_sport_id, event_description, event_date, event_local, event_duration, event_max, event_min, event_private, event_creator_id, event_club_id) " + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        let result = await pool.query(sql, [ event.name, event.sport, event.desc, event.date, event.location, event.duration, event.max, event.min, event.private, event.creator_id, event.club ]);
         return {status: 200, data: result};
     } catch (err) {
         console.log(err);

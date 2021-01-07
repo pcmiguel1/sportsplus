@@ -123,7 +123,7 @@ async function addMarkerMap() {
 
 }
 
-function createEventSubmit() {
+async function createEventSubmit() {
 
     let correct = true;
 
@@ -137,6 +137,7 @@ function createEventSubmit() {
     let event_sport = document.getElementById("sport").value;
     let event_club = document.getElementById("club").value;
     let event_date = document.getElementById("event_date").value;
+    let event_time = document.getElementById("event_time").value;
     let event_privacy = document.getElementById("event_privacy").value;
     let event_min = document.getElementById("event_min").value;
     let event_max = document.getElementById("event_max").value;
@@ -144,12 +145,22 @@ function createEventSubmit() {
 
     let box = document.getElementById("box-info");
 
-    /*let data = {
-        user_name: name,
-        user_nickname: nickname,
-        user_gender: gender,
-        user_birthday: birthday,
-        user_email: email
+    let d = event_date + " " + event_time+":00";
+
+    if (event_club == 0) event_club = null; //Se nao selecionou um club então vai passar para null, para nao dar erro na base de dados  
+
+    let data = {
+        name: event_name,
+        desc: event_desc,
+        sport: event_sport,
+        club: event_club,
+        date: d,
+        private: event_privacy,
+        min: event_min,
+        max: event_max,
+        duration: event_duration,
+        location: event_location,
+        creator_id: user.user_id
     }
 
     try {
@@ -164,6 +175,8 @@ function createEventSubmit() {
         box.style.display = "block";
         box.style.backgroundColor = "#a8e063";
         box.innerHTML = "Successfully created event <i class='fas fa-check'></i>";
+
+        window.location = "addevent.html";
         
     } catch(err) {
         console.log(err);
@@ -176,19 +189,20 @@ function createEventSubmit() {
             box.style.backgroundColor = "#ED213A";
             box.innerHTML = "It was not possible to create the event <i class='fas fa-exclamation-triangle'></i>";
         }
-    }*/
+    }
 
 }
 
 function verifyEmptyInputs() {
     let event_name = document.getElementById("event_name").value;
     let event_date = document.getElementById("event_date").value;
+    let event_time = document.getElementById("event_time").value;
     let event_min = document.getElementById("event_min").value;
     let event_max = document.getElementById("event_max").value;
     let event_duration = document.getElementById("event_duration").value;
 
     let box = document.getElementById("box-info");
-    if (event_name == "" || event_date == "" || event_min == "" || event_max == "" || event_duration == "") {
+    if (event_name == "" || event_date == "" || event_min == "" || event_max == "" || event_duration == "" || event_time == "") {
         box.style.display = "block";
         box.style.backgroundColor = "#ED213A";
         box.innerHTML = "Fill in all the spaces above <i class='fas fa-exclamation-triangle'></i>";

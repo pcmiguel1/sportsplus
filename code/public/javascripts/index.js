@@ -60,6 +60,8 @@ async function findEvent(){
     let clubID=document.getElementById("club").value;
     let date=document.getElementById("date").value;
 
+    console.log(date.substring(0,10));
+
     try {
 
         let events = await $.ajax({

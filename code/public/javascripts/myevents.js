@@ -39,11 +39,11 @@ async function loadMyEvents() {
                 html += "<td>"+event.sport_name+"</td>";
                 html += "<td>"+event.event_date+"</td>";
                 html += "<td><span class='box-status'>looking for players</span></td>";
-                if (event.event_privacy) { //Se for true
-                    html += "<td><i class='fas fa-unlock'></i></td>";
+                if (event.event_private) { //Se for privado
+                    html += "<td><i class='fas fa-lock'></i></td>";
                 }
                 else {
-                    html += "<td><i class='fas fa-lock'></i></td>";
+                    html += "<td><i class='fas fa-unlock'></i></td>";
                 }
                 html += "<td>"+event.event_min + "/" + event.event_max +"</td>";
                 html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete'><i class='fas fa-trash'></i></a></td>"

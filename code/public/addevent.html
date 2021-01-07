@@ -65,12 +65,13 @@
       <select id="sport"></select>
       <select id="club" onchange="addMarkerMap();"></select>
       <input type="date" id="event_date" required/>
+      <input type="time" id="event_time" required/>
       <select id="event_privacy">
-        <option value="public">Public</option>
-        <option value="private">Private</option>
+        <option value="0">Public</option>
+        <option value="1">Private</option>
       </select>
-      <input type="number" step="1" min="1" id="event_min" placeholder="Min" value="1" required/>
-      <input type="number" step="1" min="2" id="event_max" placeholder="Max" value="2" required/>
+      <input type="number" step="1" min="1" id="event_min" placeholder="Min players" value="1" required/>
+      <input type="number" step="1" min="2" id="event_max" placeholder="Max players" value="2" required/>
       <input type="number" step="1" id="event_duration" placeholder="Event Duration" required/>
       <button class="btn-add-event" onclick="createEventSubmit();">CREATE</button>
     </section>

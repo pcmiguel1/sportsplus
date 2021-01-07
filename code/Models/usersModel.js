@@ -37,7 +37,7 @@ module.exports.createUser = async function(user) {
 
 module.exports.getUserEvents = async function(user_id) {
     try {
-        let sql = "SELECT * FROM events E, sports S WHERE event_creator_id = ? and E.event_sport_id = S.sport_id";
+        let sql = "SELECT E.event_name, DATE_FORMAT(E.event_date, '%d-%m-%Y %H:%i') as event_date, E.event_min, E.event_max, E.event_private, S.sport_name FROM events E, sports S WHERE event_creator_id = ? and E.event_sport_id = S.sport_id";
         let result = await pool.query(sql, [ user_id ]);
         return {status: 200, data: result };
     } catch (err) {
