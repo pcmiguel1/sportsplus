@@ -46,7 +46,7 @@ async function loadMyEvents() {
                     html += "<td><i class='fas fa-unlock'></i></td>";
                 }
                 html += "<td>"+event.event_min + "/" + event.event_max +"</td>";
-                html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete'><i class='fas fa-trash'></i></a></td>"
+                html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete' onclick='deleteEvent("+event.event_id+");'><i class='fas fa-trash'></i></a></td>"
 
             }
             document.getElementById("table-my-events").innerHTML = html;
@@ -56,6 +56,20 @@ async function loadMyEvents() {
         console.log(err);
     }
 
+}
+
+//Delete event from myEvents table
+async function deleteEvent(event_id) {
+    try {
+        let event = await $.ajax({
+            url: "/api/events/"+event_id,
+            method: "delete",
+            dataType: "json"
+        });
+    } catch(err) {
+        console.log(err);
+    }
+    window.location = "myevents.html";
 }
 
 function logout() {

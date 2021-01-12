@@ -41,6 +41,17 @@ module.exports.getEvent = async function(event_id) {
     } 
 };
 
+module.exports.deleteEvent = async function(event_id) {
+    try {
+        let sql = "DELETE FROM events WHERE event_id = ?";
+        let event = await pool.query(sql, [ event_id ]);
+        return {status: 200, data: event[0]};
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};
+
 module.exports.createEvent = async function(event) {
     try {
 
