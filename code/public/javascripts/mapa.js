@@ -1,14 +1,25 @@
 let events_json = sessionStorage.getItem("events");
 var events = JSON.parse(events_json);
 
+var map;
+
 window.onload = function () {
 
     setupMap(); 
 
 }
 
+//Get current location and put a marker
+function onLocationFound(e) {
+
+    L.marker(e.latlng).addTo(map);
+}
+
 async function setupMap() {
-    var map = L.map('mapa',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
+    map = L.map('mapa',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
+
+    map.locate({setView: true, maxZoom: 16});
+    map.on('locationfound', onLocationFound);
 
     for (let event of events) {
 
