@@ -1,9 +1,20 @@
+//Vai buscar a informacao sobre o utilizador logado
+let user_json = sessionStorage.getItem("user");
+var user = JSON.parse(user_json);
+
 let events_json = sessionStorage.getItem("events");
 var events = JSON.parse(events_json);
-
+console.log(events);
 var map;
 
 window.onload = function () {
+
+    //Se foi feito o login quer dizer que existe utilizador, por isso vai fazer desaparecer o botao de login e vai fazer aparecer o nome de utilizador
+    if(user){
+        document.getElementById("loginButton").style.display="none";
+        document.getElementById("boxUser").style.display="flex";
+        document.getElementById("username").innerHTML=user.user_nickname;
+    }
 
     setupMap(); 
 
@@ -66,14 +77,19 @@ async function setupMap() {
             let modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            /*document.getElementById("event-name").innerHTML = event.event_name;
+            document.getElementById("event-name").innerHTML = event.event_name;
             document.getElementById("sport").innerHTML = event.sport_name;
             document.getElementById("date").innerHTML = event.event_date.substring(0,10)+" "+event.event_date.substring(11,16);
-            document.getElementById("privacy").innerHTML = "";
+            if(event.event_private) {
+                document.getElementById("privacy").innerHTML = "<i class='fas fa-lock'></i>";
+            }
+            else {
+                document.getElementById("privacy").innerHTML = "<i class='fas fa-lock-open'></i>";
+            }
             document.getElementById("players").innerHTML = "";
-            document.getElementById("descricao").innerHTML = event.event_description;*/
+            document.getElementById("descricao").innerHTML = event.event_description;
 
-            setupMapEvent();
+            setupMapEvent(event);
         })
 
     }
@@ -91,13 +107,41 @@ function closeModel() {
     modal.style.display = "none";
 }
 
-function setupMapEvent() {
+function setupMapEvent(event) {
     let map2 = L.map('map-event',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
+
+    var markerIcon = L.icon({
+        iconUrl: event.sport_image,
+    
+        iconSize:     [73, 80], // size of the icon
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    let location = "";
+
+        //Se o evento nao tiver local definido então vai buscar o local ao club respetivo
+        if (event.event_local == "") {
+            location = event.club_local;
+
+        }
+        else {
+            location = event.event_local;
+        }
+
+        //Vai buscar a latitude e a longitude do evento e vai colocar no marker
+        var split_location = location.split("#");
+    
+        let marker = new L.marker(new L.LatLng(split_location[0], split_location[1]), {icon: markerIcon}).addTo(map2);
+
 
     L.tileLayer('https://api.mapbox.com/styles/v1/pcmiguel/ckhsyjp813gxb19qq3eqydsmu/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicGNtaWd1ZWwiLCJhIjoiY2toc3lncG1zMGllajJxcGkxYnNjanVieCJ9.yfUra6VpwwsP4dGk9badRA', {
         tileSize: 512,
         zoomOffset: -1,
         attribution: '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map2);
+
+}
+
+function joinEvent() {
 
 }
