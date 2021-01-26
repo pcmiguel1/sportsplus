@@ -45,7 +45,7 @@ async function loadMyEvents() {
                 else {
                     html += "<td><i class='fas fa-unlock'></i></td>";
                 }
-                html += "<td>"+event.event_min + "/" + event.event_max +"</td>";
+                html += "<td>"+event.players.totalPlayers + "/" + event.event_max +"</td>";
                 html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete' onclick='deleteEvent("+event.event_id+");'><i class='fas fa-trash'></i></a></td>"
 
             }

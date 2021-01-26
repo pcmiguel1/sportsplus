@@ -9,6 +9,7 @@ body {
   display: grid;
   grid-template-areas: "h h" "nav main" "f f";
   grid-template-columns: 20% auto;
+  overflow-x: hidden;
 }
 
 a {
@@ -192,6 +193,9 @@ footer {
   background-color: #5BC0DE;
   justify-content: center;
   margin-top: 5%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 footer section {

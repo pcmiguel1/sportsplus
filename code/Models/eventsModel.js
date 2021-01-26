@@ -21,9 +21,25 @@ module.exports.getAllEvents = async function(filterObj) {
             filterQueries += " AND DATE(event_date) = ?";
             filterValues.push(filterObj.date.substring(0,10)); //substring para mostrar so a parte da data e nao a hora
         }
-        sql = "SELECT * FROM events E LEFT OUTER JOIN sports S ON E.event_sport_id = S.sport_id LEFT OUTER JOIN clubs C ON E.event_club_id = C.club_id WHERE E.event_sport_id = S.sport_id" + filterQueries;
+        let sql = "SELECT * FROM events E LEFT OUTER JOIN sports S ON E.event_sport_id = S.sport_id LEFT OUTER JOIN clubs C ON E.event_club_id = C.club_id WHERE E.event_sport_id = S.sport_id" + filterQueries;
         let events = await pool.query(sql, filterValues);
         if(events.length > 0) {
+
+            for (let event of events) {
+
+                //Calcular para cada evento o número de jogadores que estão a participar
+                sql = "SELECT COUNT(participant_event_id) AS totalPlayers FROM participants WHERE participant_event_id = ?";
+                let count = await pool.query(sql, event.event_id);
+                event.players = count[0];
+
+                //Listar os jogadores que estao a participar no evento
+                sql = "SELECT * FROM users U, participants P WHERE U.user_id = P.participant_event_id AND P.participant_event_id = ?";
+                let players = await pool.query(sql, event.event_id);
+                event.players.list = players;
+
+            }
+
+
             return {status: 200, data: events}; 
         }
         else {

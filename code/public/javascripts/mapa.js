@@ -56,7 +56,7 @@ function setupMap() {
         "<h1>"+event.event_name+" - "+event.sport_name+"</h1>"+
         "<h3><b>Local: </b>"+event.club_name+"</h3>"+
         "<h3><b>Data: </b>"+event.event_date.substring(0,10)+" "+event.event_date.substring(11,16)+"</h3>"+
-        "<h3><b>Participantes: </b>2/4</h3>"+
+        "<h3><b>Participantes: </b>"+event.players.totalPlayers+"/"+event.event_max+"</h3>"+
         "<h5>Carregar para mais informação </h5>"+
         "</section>");
 
