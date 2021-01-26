@@ -23,7 +23,12 @@ module.exports.getAllEvents = async function(filterObj) {
         }
         sql = "SELECT * FROM events E LEFT OUTER JOIN sports S ON E.event_sport_id = S.sport_id LEFT OUTER JOIN clubs C ON E.event_club_id = C.club_id WHERE E.event_sport_id = S.sport_id" + filterQueries;
         let events = await pool.query(sql, filterValues);
-        return {status: 200, data: events};
+        if(events.length > 0) {
+            return {status: 200, data: events}; 
+        }
+        else {
+            return {status: 404, data: {msg: "Events not found!"}};
+        }
     } catch (err) {
         console.log(err);
         return {status: 500, data: err};
@@ -54,9 +59,19 @@ module.exports.deleteEvent = async function(event_id) {
 
 module.exports.createEvent = async function(event) {
     try {
-
         let sql = "INSERT INTO events(event_name, event_sport_id, event_description, event_date, event_local, event_duration, event_max, event_min, event_private, event_creator_id, event_club_id) " + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         let result = await pool.query(sql, [ event.name, event.sport, event.desc, event.date, event.location, event.duration, event.max, event.min, event.private, event.creator_id, event.club ]);
+        return {status: 200, data: result};
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};
+
+module.exports.attendEvent = async function(obj) {
+    try {
+        let sql = "INSERT INTO participants(participant_user_id, participant_event_id) VALUES (?,?)";
+        let result = await pool.query(sql, [obj.user_id, obj.event_id]);
         return {status: 200, data: result};
     } catch (err) {
         console.log(err);

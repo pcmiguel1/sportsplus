@@ -2,10 +2,10 @@ const util = require('util')
 const mysql = require('mysql')
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: 'db4free.net',
-  user: 'sportsplus',
-  password: 'sportsplusadmin',
-  database: 'sportsplus'
+  host: '116.202.210.174',
+  user: 'mc12605',
+  password: '12117db78f',
+  database: 'mc12605'
 })
 
 // Ping database to check for common exception errors.

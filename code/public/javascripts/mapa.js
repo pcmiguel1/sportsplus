@@ -4,8 +4,11 @@ var user = JSON.parse(user_json);
 
 let events_json = sessionStorage.getItem("events");
 var events = JSON.parse(events_json);
-console.log(events);
+
 var map;
+var map2 = null;
+var currectLocation;
+var route = null;
 
 window.onload = function () {
 
@@ -20,17 +23,8 @@ window.onload = function () {
 
 }
 
-//Get current location and put a marker
-function onLocationFound(e) {
-
-    L.marker(e.latlng).addTo(map);
-}
-
-async function setupMap() {
+function setupMap() {
     map = L.map('mapa',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
-
-    map.locate({setView: true, maxZoom: 16});
-    map.on('locationfound', onLocationFound);
 
     for (let event of events) {
 
@@ -57,6 +51,7 @@ async function setupMap() {
     
         let marker = new L.marker(new L.LatLng(split_location[0], split_location[1]), {icon: markerIcon}).addTo(map);
 
+        //Vai criar o popup de quando coloca o rato por cima do evento
         marker.bindPopup("<section class='popup'>"+
         "<h1>"+event.event_name+" - "+event.sport_name+"</h1>"+
         "<h3><b>Local: </b>"+event.club_name+"</h3>"+
@@ -65,14 +60,18 @@ async function setupMap() {
         "<h5>Carregar para mais informação </h5>"+
         "</section>");
 
+        //Quando passa o rato por cima do evento faz aparecer o popup
         marker.on('mouseover', function(){
             marker.openPopup();
           });
 
+        //Quando tira o rato por cima do evento fecha o popup
         marker.on('mouseout', function(){
             marker.closePopup();
           });
 
+
+          //Evento de quando clica num evento no mapa
         marker.on("click", function(){
             let modal = document.getElementById("myModal");
             modal.style.display = "block";
@@ -88,6 +87,8 @@ async function setupMap() {
             }
             document.getElementById("players").innerHTML = "";
             document.getElementById("descricao").innerHTML = event.event_description;
+
+            document.getElementById("btn-div").innerHTML = "<button class='join-event-button' onclick='joinEvent("+event.event_id+")'>JOIN EVENT</button>";
 
             setupMapEvent(event);
         })
@@ -108,7 +109,12 @@ function closeModel() {
 }
 
 function setupMapEvent(event) {
-    let map2 = L.map('map-event',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
+
+    if (map2 != null) { //se o mapa nao for null então vai remover o mapa para não dar o erro que o mapa já foi inicializado
+        map2.remove();
+    }
+
+    map2 = L.map('map-event',{minZoom: 11}).setView(new L.LatLng(38.7476289, -9.1518309), 9);
 
     var markerIcon = L.icon({
         iconUrl: event.sport_image,
@@ -130,9 +136,20 @@ function setupMapEvent(event) {
 
         //Vai buscar a latitude e a longitude do evento e vai colocar no marker
         var split_location = location.split("#");
+        var lat = split_location[0];
+        var lng = split_location[1];
     
-        let marker = new L.marker(new L.LatLng(split_location[0], split_location[1]), {icon: markerIcon}).addTo(map2);
+        L.marker(new L.LatLng(lat, lng), {icon: markerIcon}).addTo(map2);
 
+        //Saber o local do utilizador e colocar um marker no mapa
+        map.locate({setView: false, maxZoom: 9});
+        map.on('locationfound', function onLocationFound(e) {
+            currectLocation = e.latlng;
+            L.marker(e.latlng).addTo(map2);
+            getRoute(lat, lng);
+        });
+
+        
 
     L.tileLayer('https://api.mapbox.com/styles/v1/pcmiguel/ckhsyjp813gxb19qq3eqydsmu/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicGNtaWd1ZWwiLCJhIjoiY2toc3lncG1zMGllajJxcGkxYnNjanVieCJ9.yfUra6VpwwsP4dGk9badRA', {
         tileSize: 512,
@@ -142,6 +159,50 @@ function setupMapEvent(event) {
 
 }
 
-function joinEvent() {
+//calcular rota entre a localizaçao do utilizador e do evento
+function getRoute(event_lat, event_lng) {
+
+    if (route != null) { //Vai remover a rota se nao for null para não ficar duplicado
+        map2.removeControl(route);
+    }
+
+    let lat = currectLocation.lat;
+    let lng = currectLocation.lng;
+
+    route = L.Routing.control({
+        waypoints: [
+          L.latLng(lat, lng),
+          L.latLng(event_lat, event_lng)
+        ],
+        waypointMode: 'snap',
+        createMarker: function() {} //Remover Waypoints
+      }).addTo(map2);
+
+      document.getElementsByClassName("leaflet-control-container")[1].style.display = "None";
+}
+
+async function joinEvent(id) {
+
+    let data = {
+        user_id: user.user_id,
+        event_id: id
+    }
+
+    try {
+
+        let result = await $.ajax({
+            url: "/api/events/attend",
+            method: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json"
+        });
+        
+        alert("A participar no evento com sucesso!");
+        closeModel(); //Fechar Model
+        
+    } catch(err) {
+        console.log(err);
+    }
 
 }

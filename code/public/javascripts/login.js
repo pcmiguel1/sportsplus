@@ -1,4 +1,5 @@
 
+//Fazer aparecer a caixa do Registro
 function selectorRegister() {
 
     document.getElementById("selectorRegister").classList.add("selector-active");
@@ -9,6 +10,7 @@ function selectorRegister() {
 
 }
 
+//Fazer aparecer a caixa do login
 function selectorLogin() {
 
     document.getElementById("selectorLogin").classList.add("selector-active");
@@ -20,29 +22,24 @@ function selectorLogin() {
 }
 
 async function loginButton(){
-    let loginText=document.getElementById("username").value;
-    let userCheck=false;
-    if(loginText != ""){
+    let usernameInput = document.getElementById("username").value;
+    if(usernameInput != ""){
         try {
-
-            let users = await $.ajax({
-                url: "/api/users",
+            
+            let user = await $.ajax({
+                url: "/api/users?user_nickname="+usernameInput,
                 method: "get",
                 dataType: "json"
             });
-            for(let user of users){
-                if(user.user_nickname==loginText){
-                    userCheck=true;
-                    let user_json = JSON.stringify(user);
-                    sessionStorage.setItem("user", user_json); //Vai guardar na sessionStorage a informacao do utilizador
-                    window.location="index.html";
-                }
-            }
-            if(!userCheck){
-                document.getElementById("error").innerHTML = "User not found!";
-            }
+            let user_json = JSON.stringify(user);
+            sessionStorage.setItem("user", user_json); //Vai guardar na sessionStorage a informacao do utilizador
+            window.location="index.html";
+                
         } catch(err) {
             console.log(err);
+            if (err.status == 404) {
+                document.getElementById("error").innerHTML = err.responseJSON.msg;
+            }
         }
     }
     else{
