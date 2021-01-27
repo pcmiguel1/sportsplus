@@ -9,21 +9,21 @@ window.onload = function () {
         document.getElementById("username").innerHTML=user.user_nickname;
     }
 
-    loadMyEvents();
+    loadEventsParticipated();
 
 }
 
-async function loadMyEvents() {
+async function loadEventsParticipated() {
 
     try {
 
         let events = await $.ajax({
-            url: "/api/users/"+user.user_id+"/events",
+            url: "/api/users/"+user.user_id+"/participated",
             method: "get",
             dataType: "json"
         });
 
-        let html = "<tr><th>NAME</th><th>SPORT</th><th>DATE</th><th>STATUS</th><th>PRIVACY</th><th>PLAYERS</th><th></th></tr>";
+        let html = "<tr><th>NAME</th><th>SPORT</th><th>DATE</th><th>STATUS</th><th>PRIVACY</th><th>PLAYERS</th></tr>";
         for (let event of events) {
             html += "<tr>";
             html += "<td>"+event.event_name+"</td>";
@@ -37,7 +37,6 @@ async function loadMyEvents() {
                 html += "<td><i class='fas fa-unlock'></i></td>";
             }
             html += "<td>"+event.players.totalPlayers + "/" + event.event_max +"</td>";
-            html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete' onclick='deleteEvent("+event.event_id+");'><i class='fas fa-trash'></i></a></td>"
 
         }
         document.getElementById("table-my-events").innerHTML = html;
@@ -45,27 +44,13 @@ async function loadMyEvents() {
     } catch(err) {
         console.log(err);
         if (err.status == 404) {
-            //Vai mostrar uma mensagem se nao existir eventos criados pelo utilizador
+            //Vai mostrar uma mensagem se nao existir eventos participados
             document.getElementById("error").style.display="flex";
             document.getElementById("table-my-events").style.display="none";
             document.getElementById("error").innerHTML = err.responseJSON.msg;
         }
     }
 
-}
-
-//Delete event from myEvents table
-async function deleteEvent(event_id) {
-    try {
-        let event = await $.ajax({
-            url: "/api/events/"+event_id,
-            method: "delete",
-            dataType: "json"
-        });
-    } catch(err) {
-        console.log(err);
-    }
-    window.location = "myevents.html";
 }
 
 function logout() {
