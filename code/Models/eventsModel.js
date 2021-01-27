@@ -77,6 +77,13 @@ module.exports.createEvent = async function(event) {
     try {
         let sql = "INSERT INTO events(event_name, event_sport_id, event_description, event_date, event_local, event_duration, event_max, event_min, event_private, event_creator_id, event_club_id) " + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         let result = await pool.query(sql, [ event.name, event.sport, event.desc, event.date, event.location, event.duration, event.max, event.min, event.private, event.creator_id, event.club ]);
+        
+        let event_id = result.insertId;
+
+        //Colocar o criador do evento como participante também
+        sql = "INSERT INTO participants(participant_user_id, participant_event_id) VALUES (?,?)";
+        result = await pool.query(sql, [event.creator_id, event_id]);
+        
         return {status: 200, data: result};
     } catch (err) {
         console.log(err);
