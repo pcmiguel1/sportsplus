@@ -87,7 +87,7 @@ module.exports.getUserEvents = async function(user_id) {
 //Eventos que um certo utilizador está a participar
 module.exports.getUserEventsAttend = async function(user_id) {
     try {
-        let sql = "SELECT E.event_id, E.event_name, DATE_FORMAT(E.event_date, '%d-%m-%Y %H:%i') as event_date, E.event_min, E.event_max, E.event_private, S.sport_name FROM events E, sports S WHERE event_creator_id = ? AND E.event_sport_id = S.sport_id AND CURDATE() < E.event_date";
+        let sql = "SELECT E.event_id, E.event_name, DATE_FORMAT(E.event_date, '%d-%m-%Y %H:%i') as event_date, E.event_min, E.event_max, E.event_private, S.sport_name FROM events E, sports S, participants P WHERE P.participant_user_id = ? AND P.participant_event_id = E.event_id AND E.event_sport_id = S.sport_id AND CURDATE() < E.event_date";
         let events = await pool.query(sql, [ user_id ]);
         if(events.length > 0) {
 
@@ -119,7 +119,7 @@ module.exports.getUserEventsAttend = async function(user_id) {
 //Eventos que um certo utilizador já participou
 module.exports.getUserEventsParticipated = async function(user_id) {
     try {
-        let sql = "SELECT E.event_id, E.event_name, DATE_FORMAT(E.event_date, '%d-%m-%Y %H:%i') as event_date, E.event_min, E.event_max, E.event_private, S.sport_name FROM events E, sports S WHERE event_creator_id = ? AND E.event_sport_id = S.sport_id AND CURDATE() > E.event_date";
+        let sql = "SELECT E.event_id, E.event_name, DATE_FORMAT(E.event_date, '%d-%m-%Y %H:%i') as event_date, E.event_min, E.event_max, E.event_private, S.sport_name FROM events E, sports S, participants P WHERE P.participant_user_id = ? AND P.participant_event_id = E.event_id AND E.event_sport_id = S.sport_id AND CURDATE() > E.event_date";
         let events = await pool.query(sql, [ user_id ]);
         if(events.length > 0) {
 
