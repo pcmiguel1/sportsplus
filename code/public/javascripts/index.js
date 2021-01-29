@@ -60,8 +60,6 @@ async function findEvent(){
     let clubID=document.getElementById("club").value;
     let date=document.getElementById("date").value;
 
-    console.log(date.substring(0,10));
-
     try {
 
         let events = await $.ajax({
@@ -70,18 +68,17 @@ async function findEvent(){
             dataType: "json"
         });
 
-        if (events.length > 0) { //Se tiver algum evento na lista
-            let events_json = JSON.stringify(events); //converting list to json
-            sessionStorage.setItem("events", events_json); //saving events on Web Storage
-            window.location = "mapa.html"; //changing to the mapa page
-        }
-        else { //se o tamanho for 0, então vai mostrar um erro
-            document.getElementById("error").innerHTML = "No Events found!";
-        }
+        let events_json = JSON.stringify(events); //converting list to json
+        sessionStorage.setItem("events", events_json); //saving events on Web Storage
+        window.location = "mapa.html"; //changing to the mapa page
 
 
     } catch(err) {
         console.log(err);
+        if (err.status == 404) {
+            //Vai mostrar uma mensagem se nao existir eventos
+            document.getElementById("error").innerHTML = err.responseJSON.msg;
+        }
     }
 }
 
