@@ -57,68 +57,40 @@ async function buttonRegister() {
     let birthday = document.getElementById("date").value;
     let email = document.getElementById("email").value;
 
-    let userCheck = false;
-
     if (name != "" && nickname != "" && email != "" && birthday != "") { //Verifica se está tudo preenchido
 
-        //Verificar se o nickname já existe na base de dados
-
+        let data = {
+            user_name: name,
+            user_nickname: nickname,
+            user_gender: gender,
+            user_birthday: birthday,
+            user_email: email
+        }
+    
         try {
-
-            let users = await $.ajax({
+    
+            let result = await $.ajax({
                 url: "/api/users",
-                method: "get",
+                method: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
                 dataType: "json"
             });
-            for(let user of users){
-                if(user.user_nickname==nickname){
-                    userCheck = true;
-                }
-            }
-    
+            res.innerHTML = "User successfully registered!";
+
+            window.location = "login.html";
+            
         } catch(err) {
             console.log(err);
-        }
-
-
-        if (!userCheck) { //Se o nickname não existir então vai criar a conta
-
-            let data = {
-                user_name: name,
-                user_nickname: nickname,
-                user_gender: gender,
-                user_birthday: birthday,
-                user_email: email
+            if (err.status == 404) {
+                //Vai mostrar uma mensagem se o utilizador ja existir
+                res.innerHTML = err.responseJSON.msg;
             }
-        
-            try {
-        
-                let result = await $.ajax({
-                    url: "/api/users",
-                    method: "post",
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    dataType: "json"
-                });
-                res.innerHTML = "User successfully registered!";
-
-                //Limpar campos
-                document.getElementById("name").value = "";
-                document.getElementById("username2").value = "";
-                document.getElementById("email").value = "";
-                document.getElementById("date").value = "";
-                
-            } catch(err) {
-                console.log(err);
-                if (err.responseJSON) {
-                    res.innerHTML = err.responseJSON.msg;
-                } else {
-                    res.innerHTML = "Could not create user!";
-                }
+            if (err.responseJSON) {
+                res.innerHTML = err.responseJSON.msg;
+            } else {
+                res.innerHTML = "Could not create user!";
             }
-
-        } else {
-            res.innerHTML = "This nickname already exists!";
         }
 
     }

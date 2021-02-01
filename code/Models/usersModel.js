@@ -43,9 +43,20 @@ module.exports.getUser = async function(filterObj) {
 module.exports.createUser = async function(user) {
     try {
 
-        let sql = "INSERT INTO users(user_name, user_nickname, user_gender, user_birthday, user_email) " + "VALUES (?,?,?,?,?)";
-        let result = await pool.query(sql, [ user.user_name, user.user_nickname, user.user_gender, user.user_birthday, user.user_email ]);
-        return {status: 200, data: result};
+        //Verifica se o nickname já existe na base de dados
+        let sql = "SELECT * FROM users WHERE user_nickname = ?";
+        let result = await pool.query(sql, [ user.user_nickname ]);
+
+        if (result.length == 0) {
+            //Se nao existir entao vai criar um novo user
+            sql = "INSERT INTO users(user_name, user_nickname, user_gender, user_birthday, user_email) VALUES (?,?,?,?,?)";
+            result = await pool.query(sql, [ user.user_name, user.user_nickname, user.user_gender, user.user_birthday, user.user_email ]);
+            return {status: 200, data: result};
+        }
+        else {
+            return {status: 404, data: {msg: "Username already exists!"}};
+        }
+
     } catch (err) {
         console.log(err);
         return {status: 500, data: err};
