@@ -26,6 +26,18 @@ window.onload = function () {
 function setupMap() {
     map = L.map('mapa',{minZoom: 12}).setView(new L.LatLng(38.7476289, -9.1518309), 13);
 
+    //Colocar geocoding no mapa
+    let geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false
+      })
+        .on('markgeocode', function(e) {
+          
+            var center = e.geocode.center;
+            map.setView(center, 15); //Fazer zoom até ao local
+          
+        })
+        .addTo(map);
+
     for (let event of events) {
 
         var markerIcon = L.icon({
