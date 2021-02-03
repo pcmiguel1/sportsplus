@@ -26,9 +26,9 @@ router.post('/', async function(req, res, next) {
     res.status(result.status).send(result.data);
 });
 
-router.post('/attend', async function(req, res, next) {
+router.put('/', async function(req, res, next) {
     let event = req.body;
-    let result = await eventsModel.attendEvent(event);
+    let result = await eventsModel.updateEvent(event);
     res.status(result.status).send(result.data);
 });
 

@@ -37,7 +37,7 @@ async function loadMyEvents() {
                 html += "<td><i class='fas fa-unlock'></i></td>";
             }
             html += "<td>"+event.players.totalPlayers + "/" + event.event_max +"</td>";
-            html += "<td><a class='btn-edit'><i class='fas fa-pen'></i></a><a class='btn-delete' onclick='deleteEvent("+event.event_id+");'><i class='fas fa-trash'></i></a></td>"
+            html += "<td><a class='btn-edit' onclick='editEvent("+event.event_id+");'><i class='fas fa-pen'></i></a><a class='btn-delete' onclick='deleteEvent("+event.event_id+");'><i class='fas fa-trash'></i></a></td>"
 
         }
         document.getElementById("table-my-events").innerHTML = html;
@@ -62,9 +62,12 @@ async function deleteEvent(event_id) {
             method: "delete",
             dataType: "json"
         });
+
     } catch(err) {
         console.log(err);
     }
+
+    alert("event successfully deleted!");
     window.location = "myevents.html";
 }
 
@@ -73,4 +76,99 @@ function logout() {
         sessionStorage.clear();
         window.location = "index.html";
     }
+}
+
+function closeModel() {
+    let modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
+async function editEvent(event_id) {
+
+    try {
+
+        let event = await $.ajax({
+            url: "/api/events/"+event_id,
+            method: "get",
+            dataType: "json"
+        });
+
+        //se o evento foi privado então vai fazer aparecer o input para adicionar jogadores na whitelist
+        if (event.event_private) { 
+            document.getElementById("box-whitelist").style.display = "flex";
+        }
+
+        //Vai carregar a informacao do evento
+        document.getElementById("event_name").value = event.event_name;
+        document.getElementById("event_desc").value = event.event_description;
+        document.getElementById("event_date").value = event.event_date.substring(0, 10);
+        document.getElementById("event_time").value = event.event_date.substring(11, 16);
+        document.getElementById("event_privacy").value = event.event_private;
+        document.getElementById("event_min").value = event.event_min;
+        document.getElementById("event_max").value = event.event_max;
+        document.getElementById("event_duration").value = event.event_duration;
+
+        //Criar botão que tem onclick com o id do evento
+        document.getElementById("btn-update").innerHTML = "<button class='btn-add-event' onclick='updateEvent("+event.event_id+");'>Update</button>";
+
+
+    } catch(err) {
+        console.log(err);
+        if (err.status == 404) {
+            //Vai mostrar uma mensagem se nao existir o evento
+            alert(err.responseJSON.msg);
+        }
+    }
+
+    //Vai abrir o modal
+    let modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+}
+
+async function updateEvent(id) {
+
+    let name = document.getElementById("event_name").value;
+    let desc = document.getElementById("event_desc").value;
+    let date = document.getElementById("event_date").value;
+    let time = document.getElementById("event_time").value;
+    let private = document.getElementById("event_privacy").value;
+    let min = document.getElementById("event_min").value;
+    let max = document.getElementById("event_max").value;
+    let duration = document.getElementById("event_duration").value;
+
+    if (name != "" || desc != "" || date != "" || time != "" || private != "" || min != "" || max != "" || duration != "") {
+
+        let data = {
+            event_id: id,
+            event_name: name,
+            event_desc: desc,
+            event_date: date,
+            event_time: time,
+            event_private: private,
+            event_min: min,
+            event_max: max,
+            event_duration: duration
+        }
+    
+        try {
+    
+            let result = await $.ajax({
+                url: "/api/events",
+                method: "put",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json"
+            });
+
+            alert("Event information updated successfully!");
+            window.location = "myevents.html";
+    
+            
+        } catch(err) {
+            console.log(err);
+        }
+
+    }
+
 }

@@ -48,6 +48,45 @@
   <main>
     <h2 id="error"></h2>
     <table id="table-my-events"></table>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+
+        <section class="header-modal">
+          <h1 id="modal-title">Editar Evento</h1>
+          <span class="close" onclick="closeModel()">&times;</span>
+        </section>
+
+        <section class="event">
+
+          <section class="update-inputs">
+            <input type="text" id="event_name" placeholder="Event name"/>
+            <textarea rows="4" cols="50" id="event_desc" placeholder="Event description"></textarea>
+            <input type="date" id="event_date"/>
+            <input type="time" id="event_time"/>
+            <div id="btn-update"></div>
+          </section>
+
+          <section class="update-inputs" style="margin-left: 20px;">
+            <select id="event_privacy">
+              <option value="0">Public</option>
+              <option value="1">Private</option>
+            </select>
+            <input type="number" step="1" min="1" id="event_min" placeholder="Min players"/>
+            <input type="number" step="1" min="2" id="event_max" placeholder="Max players"/>
+            <input type="number" step="1" id="event_duration" placeholder="Event Duration"/>
+          </section>
+
+          <section id="box-whitelist" class="update-inputs" style="margin-left: 20px;">
+            <h3>Add Player to the whitelist</h3>
+            <input type="text" id="player_name" placeholder="Player name"/>
+            <button class="btn-add-event" onclick="addPlayer();">Add Player</button>
+          </section>
+          
+        </section>
+      </div>
+    </div>
+
   </main>
 
   <footer>

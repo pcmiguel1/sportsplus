@@ -158,3 +158,49 @@ module.exports.getUserEventsParticipated = async function(user_id) {
         return {status: 500, data: err};
     } 
 };
+
+// Adicionar utilizador como participante de um evento
+// Vai verificar se o utilizador já é participante
+// e se o evento for privado vai verificar se está na whitelist
+module.exports.attendEvent = async function(obj) {
+    try {
+        
+        //Verificar se o utilizador está a participar no evento
+        let sql = "SELECT * FROM participants P WHERE P.participant_user_id = ? AND P.participant_event_id = ?";
+        let result = await pool.query(sql, [ obj.user_id, obj.event_id ]);
+
+        if (result.length > 0) { //Se for participante, vai dizer que já está a participar no evento
+            return {status: 404, data: {msg: "You are already participating in the event!"}}; 
+        }
+        else { // utilizador não está a participar no evento
+
+            //Se o evento for privado, vai verificar se o utilizador está na whitelist
+            if (obj.event_private) {
+
+                sql = "SELECT * FROM whitelist WHERE whitelist_user_id = ? AND whitelist_event_id = ?";
+                result = await pool.query(sql, [ obj.user_id, obj.event_id ]);
+
+                if (result.length > 0) { //Se o utilizador estiver na whitelist
+
+                    //Vai adicionar o utilizador como participante do evento
+                    sql = "INSERT INTO participants(participant_user_id, participant_event_id) VALUES (?,?)";
+                    result = await pool.query(sql, [obj.user_id, obj.event_id]);
+                    return {status: 200, data: result}; 
+                    
+
+                } else { //Se nao estiver, vai dizer que o utilizador não está na whitelist
+                    return {status: 404, data: {msg: "You are not on the whitelist of this event!"}};
+                }   
+
+            } else { //Se o evento não for privado então vai adicionar o utilizador como participante do evento
+                sql = "INSERT INTO participants(participant_user_id, participant_event_id) VALUES (?,?)";
+                result = await pool.query(sql, [obj.user_id, obj.event_id]);
+                return {status: 200, data: result}; 
+            }
+        }
+
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};

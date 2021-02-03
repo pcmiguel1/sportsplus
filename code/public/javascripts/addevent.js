@@ -172,11 +172,10 @@ async function createEventSubmit() {
             contentType: "application/json",
             dataType: "json"
         });
+
         box.style.display = "block";
         box.style.backgroundColor = "#a8e063";
         box.innerHTML = "Successfully created event <i class='fas fa-check'></i>";
-
-        window.location = "addevent.html";
         
     } catch(err) {
         console.log(err);

@@ -44,7 +44,7 @@ function setupMap() {
             iconUrl: event.sport_image,
         
             iconSize:     [73, 80], // size of the icon
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            popupAnchor:  [0, -45] // point from which the popup should open relative to the iconAnchor
         });
 
         let location = "";
@@ -67,7 +67,7 @@ function setupMap() {
         marker.bindPopup("<section class='popup'>"+
         "<h1>"+event.event_name+" - "+event.sport_name+"</h1>"+
         "<h3><b>Local: </b>"+event.club_name+"</h3>"+
-        "<h3><b>Data: </b>"+event.event_date.substring(0,10)+" "+event.event_date.substring(11,16)+"</h3>"+
+        "<h3><b>Data: </b>"+event.event_date+"</h3>"+
         "<h3><b>Participantes: </b>"+event.players.totalPlayers+"/"+event.event_max+"</h3>"+
         "<h5>Carregar para mais informação </h5>"+
         "</section>");
@@ -88,19 +88,21 @@ function setupMap() {
             let modal = document.getElementById("myModal");
             modal.style.display = "block";
 
+            sessionStorage.setItem("eventClick", JSON.stringify(event));
+
             document.getElementById("event-name").innerHTML = event.event_name;
             document.getElementById("sport").innerHTML = event.sport_name;
-            document.getElementById("date").innerHTML = event.event_date.substring(0,10)+" "+event.event_date.substring(11,16);
+            document.getElementById("date").innerHTML = event.event_date;
             if(event.event_private) {
                 document.getElementById("privacy").innerHTML = "<i class='fas fa-lock'></i>";
             }
             else {
                 document.getElementById("privacy").innerHTML = "<i class='fas fa-lock-open'></i>";
             }
-            document.getElementById("players").innerHTML = "";
+            document.getElementById("players").innerHTML = event.players.totalPlayers + "/" + event.event_max;
             document.getElementById("descricao").innerHTML = event.event_description;
 
-            document.getElementById("btn-div").innerHTML = "<button class='join-event-button' onclick='joinEvent("+event.event_id+")'>JOIN EVENT</button>";
+            document.getElementById("btn-div").innerHTML = "<button class='join-event-button' onclick='joinEvent()'>JOIN EVENT</button>";
 
             setupMapEvent(event);
         })
@@ -193,28 +195,41 @@ function getRoute(event_lat, event_lng) {
       document.getElementsByClassName("leaflet-control-container")[1].style.display = "None";
 }
 
-async function joinEvent(id) {
+async function joinEvent() {
 
-    let data = {
-        user_id: user.user_id,
-        event_id: id
+    if (user) { //se estiver autenticado
+
+        let event = JSON.parse(sessionStorage.getItem("eventClick"));
+
+        let data = {
+            user_id: user.user_id,
+            event_id: event.event_id,
+            event_private: event.event_private
+        }
+    
+        try {
+    
+            let result = await $.ajax({
+                url: "/api/users/attend",
+                method: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json"
+            });
+            
+            alert("A participar no evento com sucesso!");
+            closeModel(); //Fechar Model
+            
+        } catch(err) {
+            console.log(err);
+            if (err.status == 404) {
+                alert(err.responseJSON.msg);
+            }
+        }
+
     }
-
-    try {
-
-        let result = await $.ajax({
-            url: "/api/events/attend",
-            method: "post",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: "json"
-        });
-        
-        alert("A participar no evento com sucesso!");
-        closeModel(); //Fechar Model
-        
-    } catch(err) {
-        console.log(err);
+    else { //Se não estiver autenticado com uma conta, vai dar erro
+        alert("You need to be logged in to participate in an event!");
     }
 
 }
