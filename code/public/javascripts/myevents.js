@@ -2,6 +2,8 @@
 let user_json = sessionStorage.getItem("user");
 var user = JSON.parse(user_json);
 
+var id;
+
 window.onload = function () {
 
     //Se foi feito o login quer dizer que existe utilizador vai fazer aparecer o nome de utilizador
@@ -84,6 +86,8 @@ function closeModel() {
 }
 
 async function editEvent(event_id) {
+
+    id = event_id;
 
     try {
 
@@ -169,6 +173,45 @@ async function updateEvent(id) {
             console.log(err);
         }
 
+    }
+
+}
+
+async function addUserWhitelist() {
+
+    let nick = document.getElementById("player_name").value;
+
+    if (nick != "") {
+
+        let data = {
+            nickname: nick,
+            event_id: id
+        }
+
+        try {
+    
+            let result = await $.ajax({
+                url: "/api/events/adduserwhitelist",
+                method: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json"
+            });
+
+            alert("User successfully added!");
+            window.location = "myevents.html";
+    
+            
+        } catch(err) {
+            console.log(err);
+            if (err.status == 404) {
+                alert(err.responseJSON.msg);
+            }
+        }
+
+    }
+    else {
+        alert("Fill in the field above!");
     }
 
 }

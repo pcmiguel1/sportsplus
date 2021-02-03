@@ -100,6 +100,44 @@ module.exports.createEvent = async function(event) {
     } 
 };
 
+module.exports.addUserWhitelist = async function(obj) {
+    try {
+        
+        //Verificar se o utilizador existe
+        let sql = "SELECT * FROM users WHERE user_nickname = ?";
+        let result = await pool.query(sql, [ obj.nickname ]);
+
+
+        if (result.length > 0) { //se existir
+
+            let id = result[0].user_id;
+
+            //Verifica se o utilizador está na whitelist desse evento
+            sql = "SELECT * FROM whitelist WHERE whitelist_user_id = ? AND whitelist_event_id = ?"
+            result = await pool.query(sql, [ id, obj.event_id ]);
+
+            if (result.length > 0) { //Se o utilizado estiver na whitelist 
+                return {status: 404, data: {msg: "This user is already on the whitelist!"}};
+            }
+            else { //Se nao estiver na whitelist
+
+                //Vai adicionar na whitelist
+                sql = "INSERT INTO whitelist(whitelist_user_id, whitelist_event_id) VALUES (?,?)";
+                result = await pool.query(sql, [id, obj.event_id]);
+                return {status: 200, data: result};
+
+            }
+            
+        } else { // Se o utilizador nao existir
+            return {status: 404, data: {msg: "This user does not exist!"}};
+        }
+        
+    } catch (err) {
+        console.log(err);
+        return {status: 500, data: err};
+    } 
+};
+
 module.exports.updateEvent = async function(filterObj) {
     try {
 

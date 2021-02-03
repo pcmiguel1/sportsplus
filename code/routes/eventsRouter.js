@@ -26,6 +26,12 @@ router.post('/', async function(req, res, next) {
     res.status(result.status).send(result.data);
 });
 
+router.post('/adduserwhitelist', async function(req, res, next) {
+    let obj = req.body;
+    let result = await eventsModel.addUserWhitelist(obj);
+    res.status(result.status).send(result.data);
+});
+
 router.put('/', async function(req, res, next) {
     let event = req.body;
     let result = await eventsModel.updateEvent(event);
