@@ -178,6 +178,14 @@ main {
   border-radius: 5px;
 }
 
+.box-status-canceled {
+  background-color: crimson;
+}
+
+.box-status-complete {
+  background-color: lightgreen;
+}
+
 #error {
   display: none;
   justify-content: center;

@@ -31,7 +31,7 @@ async function loadMyEvents() {
             html += "<td>"+event.event_name+"</td>";
             html += "<td>"+event.sport_name+"</td>";
             html += "<td>"+event.event_date+"</td>";
-            html += "<td><span class='box-status'>looking for players</span></td>";
+            html += statusEvento(event);
             if (event.event_private) { //Se for privado
                 html += "<td><i class='fas fa-lock'></i></td>";
             }
@@ -83,6 +83,8 @@ function logout() {
 function closeModel() {
     let modal = document.getElementById("myModal");
     modal.style.display = "none";
+
+    document.getElementById("box-whitelist").style.display = "none";
 }
 
 async function editEvent(event_id) {
@@ -213,5 +215,37 @@ async function addUserWhitelist() {
     else {
         alert("Fill in the field above!");
     }
+
+}
+
+function statusEvento(event) {
+
+    let min = event.event_min;
+    let max = event.event_max;
+    let total = event.players.totalPlayers;
+
+    let currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
+
+    let date = event.event_date.substring(0,10);
+    let d = date.substring(0,2);
+    let m = date.substring(3,5)
+    let y = date.substring(6,10);
+    let fdate = y + "-" + m + "-" + d;
+
+    let date2 = new Date(fdate);
+    date2.setHours(0,0,0,0);
+    let html = "";
+
+    if (total < max && currentDate < date2) {
+        html = "<td><span class='box-status'>looking for players</span></td>";
+    }
+    else if ((total < min && currentDate >= date2) || (total == max && currentDate >= date2)) {
+        html = "<td><span class='box-status box-status-canceled'>Canceled</span></td>";
+    }
+    else if (total == max) {
+        html = "<td><span class='box-status box-status-complete'>Complete</span></td>";
+    }
+    return html;
 
 }
